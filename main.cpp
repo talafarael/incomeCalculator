@@ -13,10 +13,43 @@ bool exitFromLoopFunc(std::string text){
    return exitFromLoopFunc("Do you want to enter another period? (y/n)");
 }
 class MonthlyBudget{
-  public: int income;
+  public:
+  void enterAll(){
+        std::cout<<"enter income";
+        std::cin>>income;
+        std::cout<<"enter additionalExpenses";
+        std::cin>>additionalExpenses;
+        std::cout<<"enter costs";
+        std::cin>>costs;
+        std::cout<<"enter investment";
+        std::cin>>investment;
+        
+        clearProfitfunc();
+  }
+  void displayAll(){
+        std::cout<<"income:";
+        std::cout<<income<<std::endl;
+        std::cout<<"additionalExpenses:";
+        std::cout<<additionalExpenses<<std::endl;
+        std::cout<<"costs:";
+        std::cout<<costs<<std::endl;
+        std::cout<<"investment:";
+        std::cout<<investment<<std::endl;
+        std::cout<<"tax:";
+        std::cout<<tax()<<std::endl;
+        std::cout<<"preTaxProfit";
+        std::cout<<preTaxProfit()<<std::endl;
+        std::cout<<"clear profit";
+        std::cout<<clearProfit;
+        std::cout << "___________________________________________"<<std::endl;
+
+  }
+  private:
+   int income;
    int costs;
    int additionalExpenses;
    int investment;
+   std::string investementArr[5];
    int clearProfit;
    int recalculationTimes=0; 
    void clearProfitfunc(){
@@ -31,6 +64,7 @@ class MonthlyBudget{
    void taxReductionCalculation(){
    if(exitFromLoopFunc("Do you want to reschedule the budget by changing additional funds? (y/n)")){
    int sumadditionalExpenses=additionalExpenses*10/100;
+   investementArr[recalculationTimes]=additionalExpenses;
     ++recalculationTimes;
      additionalExpenses=additionalExpenses-sumadditionalExpenses;
     
@@ -63,41 +97,19 @@ int main(){
      int i=0;
     for(;;i++){
         MonthlyBudget monthly;
-        std::cout<<"enter income";
-        std::cin>>monthly.income;
-        std::cout<<"enter additionalExpenses";
-        std::cin>>monthly.additionalExpenses;
-        std::cout<<"enter costs";
-        std::cin>>monthly.costs;
-        std::cout<<"enter investment";
-        std::cin>>monthly.investment;
-        
-        monthly.clearProfitfunc();
+        monthly.enterAll();
         month.push_back(monthly);
         if(!exitFromLoopFunc("Do you want to enter another period? (y/n)")){
         break;
+        }
+}
+switch() {}
 
-}
-}
    std::cout<<i;
         
     for(int y=0;y<i+1;y++){
       MonthlyBudget monthly=month[y];
-        std::cout<<"income:";
-        std::cout<<monthly.income<<std::endl;
-        std::cout<<"additionalExpenses:";
-        std::cout<<monthly.additionalExpenses<<std::endl;
-        std::cout<<"costs:";
-        std::cout<<monthly.costs<<std::endl;
-        std::cout<<"investment:";
-        std::cout<<monthly.investment<<std::endl;
-        std::cout<<"tax:";
-        std::cout<<monthly.tax()<<std::endl;
-        std::cout<<"preTaxProfit";
-        std::cout<<monthly.preTaxProfit()<<std::endl;
-        std::cout<<"clear profit";
-        std::cout<<monthly.clearProfit;
-        std::cout << "___________________________________________"<<std::endl;
+       monthly.displayAll();
     }
 
 return 0;
