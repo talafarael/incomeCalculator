@@ -13,7 +13,16 @@ bool exitFromLoopFunc(std::string text){
    return exitFromLoopFunc("Do you want to enter another period? (y/n)");
 }
 class MonthlyBudget{
-  public:
+  public: 
+   void recalculation(){
+   int profit =income-allcost()-tax();
+    int profitPercentage = profit * 100 /  income;
+  
+    if(profitPercentage<=10&&recalculationTimes!=5){
+      displayAll();
+      clearProfitfunc();
+    }
+  }
   void enterAll(){
         std::cout<<"enter income";
         std::cin>>income;
@@ -40,11 +49,12 @@ class MonthlyBudget{
         std::cout<<"preTaxProfit";
         std::cout<<preTaxProfit()<<std::endl;
         std::cout<<"clear profit";
-        std::cout<<clearProfit;
+        std::cout<<clearProfit<<std::endl;
         std::cout << "___________________________________________"<<std::endl;
 
   }
-  private:
+
+  
    int income;
    int costs;
    int additionalExpenses;
@@ -52,6 +62,7 @@ class MonthlyBudget{
    std::string investementArr[5];
    int clearProfit;
    int recalculationTimes=0; 
+private:
    void clearProfitfunc(){
     int profit =income-allcost()-tax();
     int profitPercentage = profit * 100 /  income;
@@ -61,13 +72,15 @@ class MonthlyBudget{
      }
      clearProfit= preTaxProfit()-tax();  
    }
+
    void taxReductionCalculation(){
    if(exitFromLoopFunc("Do you want to reschedule the budget by changing additional funds? (y/n)")){
+    
    int sumadditionalExpenses=additionalExpenses*10/100;
    investementArr[recalculationTimes]=additionalExpenses;
     ++recalculationTimes;
      additionalExpenses=additionalExpenses-sumadditionalExpenses;
-    
+    std::cout<<"additionalExpenses:  "<<additionalExpenses<<std::endl;
      clearProfitfunc();
    }
    clearProfit= preTaxProfit()-tax();
@@ -92,25 +105,76 @@ class MonthlyBudget{
    }
   
 };
+void recalculation(int& i,std::vector<MonthlyBudget> &month);
+void enterAll(int& i,std::vector<MonthlyBudget> &month);
+void displayAll(int& i,std::vector<MonthlyBudget> &month);
 int main(){
-    std::vector<MonthlyBudget> month;
-     int i=0;
-    for(;;i++){
+  int i=0;
+  bool exitInEventLoop=false;
+  std::vector<MonthlyBudget> month;
+  while(!exitInEventLoop){//   enterAll( i, month);
+    
+     
+   int action;
+   std::cout<<"if you want enter budget enter : 1"<<std::endl;
+   std::cout<<"if you want see budget enter : 2"<<std::endl;
+   std::cout<<"if you want recalculation budget enter : 3"<<std::endl;
+   std::cout<<"if you want exit enter : 4"<<std::endl;
+   std::cin>>action;
+
+  
+   switch(action) {
+      case 1: 
+      enterAll(i, month);
+    break;
+    case 2:
+      displayAll(i, month);
+    break;
+    case 3:
+          recalculation(i, month);
+    break;
+    case 4:
+       exitInEventLoop=true;
+    break;
+    
+
+   }
+   std::cout<<i;
+       
+}
+
+return 0;
+}
+void displayAll(int& i,std::vector<MonthlyBudget>& month){
+ 
+    for(int y=0;y<i;y++){
+  
+      MonthlyBudget monthly=month[y];
+       monthly.displayAll();
+       
+    }
+    return;
+}
+void enterAll(int& i,std::vector<MonthlyBudget>& month){
+  
+    for(;;){
         MonthlyBudget monthly;
         monthly.enterAll();
         month.push_back(monthly);
+        ++i;
         if(!exitFromLoopFunc("Do you want to enter another period? (y/n)")){
         break;
         }
 }
-switch() {}
-
-   std::cout<<i;
-        
-    for(int y=0;y<i+1;y++){
+return;
+}
+void recalculation(int& i,std::vector<MonthlyBudget> &month){
+  std::cout<<i;
+ for(int y=0;y<i;y++){
+  std::cout<<i;
       MonthlyBudget monthly=month[y];
-       monthly.displayAll();
+       monthly.recalculation();
+       month[y]=monthly;
     }
-
-return 0;
+    return;
 }
