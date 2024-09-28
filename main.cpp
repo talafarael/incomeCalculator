@@ -81,14 +81,20 @@ class MonthlyBudget{
         std::cout<<preTaxProfit()<<std::endl;
         std::cout<<"clear profit";
         std::cout<<clearProfit<<std::endl;
+        std::cout<<"reschedule the budget"<<std::endl;
+         if(recalculationTimes!=0){
+        for(int y=0;y<recalculationTimes;y++){
+            std::cout<<"     reschedule in"<<y<<":"<<investementArr[y]<<std::endl;
+          }}
         std::cout << "___________________________________________"<<std::endl;
+       
 
   }
   int income;
   long  int costs;
   long  int additionalExpenses;
    long int investment;
-   std::string investementArr[5];
+   int investementArr[5]={-1};
   long  int clearProfit;
   long  int recalculationTimes=0; 
 private:
